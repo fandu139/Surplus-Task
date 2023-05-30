@@ -39,44 +39,25 @@ npm-debug.log
 yarn-error.log
 
 # BUCK
+#
 buck-out/
 \.buckd/
 *.keystore
 !debug.keystore
 
-# fastlane
-#
-# It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
-# screenshots whenever they are needed.
-# For more information about the recommended setup visit:
-# https://docs.fastlane.tools/best-practices/source-control/
-
-**/fastlane/report.xml
-**/fastlane/Preview.html
-**/fastlane/screenshots
-**/fastlane/test_output
-
 # Bundle artifact
+#
 *.jsbundle
 
 # Ruby / CocoaPods
+#
 /ios/Pods/
 /vendor/bundle/
 
-# CocoaPods
-/ios/Pods/
-/fastlane/report.xml
-
 # test coverage
+#
 clover.xml
 coverage-final.json
 lcov-report
 coverage
 /lcov.info
-
-# environment
-.env
-.env.staging
-.env.prod
-.env.sandbox
-.env.test
