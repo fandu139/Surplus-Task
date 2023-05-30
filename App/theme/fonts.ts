@@ -11,16 +11,6 @@ type FontWeight =
   | '800'
   | '900';
 
-const fontFamily = {
-  bold: 'SourceSansPro-Bold',
-  boldItalic: 'SourceSansPro-BoldItalic',
-  regular: 'SourceSansPro-Regular',
-  regularItalic: 'SourceSansPro-Italic',
-  medium: 'SourceSansPro-SemiBold',
-  mediumItalic: 'SourceSansPro-SemiBoldItalic',
-  extraBold: 'SourceSansPro-Black',
-  extraBoldItalic: 'SourceSansPro-BlackItalic',
-};
 
 const size = {
   18: 18,
@@ -39,22 +29,17 @@ const size = {
 
 const Fonts = {
   regular: {
-    fontFamily: fontFamily.regular,
     fontWeight: 'normal' as FontWeight,
   },
   medium: {
-    fontFamily: fontFamily.medium,
     fontWeight: 'normal' as FontWeight,
   },
   bold: {
-    fontFamily: fontFamily.bold,
     fontWeight: 'normal' as FontWeight,
   },
   extraBold: {
-    fontFamily: fontFamily.extraBold,
     fontWeight: 'normal' as FontWeight,
   },
-  fontFamily,
   size,
 };
 
