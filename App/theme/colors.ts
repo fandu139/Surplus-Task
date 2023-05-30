@@ -4,7 +4,6 @@ const Colors = {
   BLACK_50: '#505050',
   BLACK_10: '#101010',
   BLACK_39: '#333939',
-  SHIPPER_BLACK: '#202020',
   RED: '#EF4941',
   RED_10: '#EF49411A',
   RED_F0: '#F04A41',
@@ -44,6 +43,8 @@ const Colors = {
   GRAYE9: '#E9EAED',
   GREEN: '#57d9a3',
   GREEN_10: '#57d9a31A',
+  GREEN_D4: '#d4f6f3',
+  GREEN_47: '#47bba5',
   BLUE_EC: '#ECF9FF',
   BLUE_E0: '#0E98D2',
 };

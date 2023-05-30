@@ -1,4 +1,4 @@
-import Colors from '@theme/colors';
+import Colors from '../../theme/colors';
 import React from 'react';
 import { ActivityIndicator } from 'react-native';
 
@@ -20,7 +20,7 @@ const Spinner: React.FC<Props> = ({ size, color, testID, accessibilityLabel }: P
 
 Spinner.defaultProps = {
   size: 'large',
-  color: Colors.RED,
+  color: Colors.GREEN_47,
   testID: 'loading-indicator',
   accessibilityLabel: undefined,
 };

@@ -19,7 +19,7 @@ function RootNavigator(): ReactElement {
         component={MainNavigator}
       />
       <Root.Screen
-        options={{ title: '' }}
+        options={{ headerShown: false, title: '' }}
         name="LoginScreen"
         component={LoginScreen}
       />

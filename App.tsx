@@ -28,52 +28,15 @@ import AuthContext from './App/context/Auth';
 import AppSplashScreen from './App/screens/Splash';
 import RootNavigator from './App/navigation/RootNavigator';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
-
 function App(): JSX.Element {
-const [showSplashScreen, setIsShowSplashScreen] = useState(true);
-const [accountData, setAccountData] = useState({});
-const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
+  const [showSplashScreen, setIsShowSplashScreen] = useState(true);
+  const [accountData, setAccountData] = useState({});
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   React.useEffect(() => {
     setTimeout(() => {
       setIsShowSplashScreen(false);
-    }, 2000);
+    }, 5000);
   }, []);
 
   if(showSplashScreen) {

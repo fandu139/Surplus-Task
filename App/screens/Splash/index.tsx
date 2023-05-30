@@ -1,57 +1,51 @@
+import { SURPLUS_LOGO } from '../../assets/images';
+import Colors from '../../theme/colors';
+import Fonts from '../../theme/fonts';
+import AppStyles from '../../theme/appStyles';
+import Spinner from '../../uikit/Spinner';
 import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-import {
-  Colors,
-  Header,
-  LearnMoreLinks,
-} from 'react-native/Libraries/NewAppScreen';
+import { StyleSheet, Text, View } from 'react-native';
+import FastImage from 'react-native-fast-image';
 
-function AppSplashScreen(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.red : Colors.red,
-  };
+const AppSplashScreen: React.FC = () => {
   return (
-    <SafeAreaView style={styles.sectionContainer}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
+    <View style={styles.container}>
+      <FastImage
+        resizeMode={FastImage.resizeMode.contain}
+        style={styles.logoContainer}
+        source={SURPLUS_LOGO}
       />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Text>Spalsh Screen</Text>
-      </ScrollView>
-    </SafeAreaView>
+      <Text style={styles.textContent}>Membantu dan mendukung masyarakat dalam memahami dan menerapkan pola produksi dan konsumsi pangan yang selaras dengan keberlanjutan sosial dan lingkungan</Text>
+      <View style={styles.bottomContent}>
+        <Spinner />
+      </View>
+    </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    backgroundColor: '#EF4941',
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.GREEN_D4,
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  textContent: {
+    width: 250,
+    textAlign: 'center',
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  bottomContent: {
+    position: 'absolute',
+    bottom: 100,
   },
-  highlight: {
-    fontWeight: '700',
+  logoContainer: {
+    width: 200,
+    height: 200,
+  },
+  versionText: {
+    marginTop: 30,
+    color: Colors.WHITE,
+    ...Fonts.regular,
   },
 });
 
