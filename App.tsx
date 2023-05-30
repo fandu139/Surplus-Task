@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -16,7 +16,6 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-
 import {
   Colors,
   DebugInstructions,
@@ -24,6 +23,10 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import AuthContext from './App/context/Auth';
+import AppSplashScreen from './App/screens/Splash';
+import RootNavigator from './App/navigation/RootNavigator';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -56,47 +59,47 @@ function Section({children, title}: SectionProps): JSX.Element {
 }
 
 function App(): JSX.Element {
+const [showSplashScreen, setIsShowSplashScreen] = useState(true);
+const [accountData, setAccountData] = useState({});
+const [isAuthenticated, setIsAuthenticated] = useState(false);
+
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      setIsShowSplashScreen(false);
+    }, 2000);
+  }, []);
+
+  if(showSplashScreen) {
+    return <AppSplashScreen />
+  }
+
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <AuthContext.Provider value={{
+      accountData,
+      setAccountData,
+      isAuthenticated,
+      setIsAuthenticated,
+    }}>
+      <SafeAreaView style={styles.container}>
+        <NavigationContainer>
+          <RootNavigator />
+        </NavigationContainer>
+      </SafeAreaView>
+    </AuthContext.Provider>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   sectionContainer: {
     marginTop: 32,
     paddingHorizontal: 24,
