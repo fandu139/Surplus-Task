@@ -1,10 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React, { useState } from 'react';
 import type {PropsWithChildren} from 'react';
 import {
@@ -23,10 +16,6 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import { NavigationContainer } from '@react-navigation/native';
-import AuthContext from './App/context/Auth';
-import AppSplashScreen from './App/screens/Splash';
-import RootNavigator from './App/navigation/RootNavigator';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -58,7 +47,7 @@ function Section({children, title}: SectionProps): JSX.Element {
   );
 }
 
-function App(): JSX.Element {
+function MainScreen(): JSX.Element {
 const [showSplashScreen, setIsShowSplashScreen] = useState(true);
 const [accountData, setAccountData] = useState({});
 const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -68,38 +57,32 @@ const [isAuthenticated, setIsAuthenticated] = useState(false);
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
-
-
-  React.useEffect(() => {
-    setTimeout(() => {
-      setIsShowSplashScreen(false);
-    }, 2000);
-  }, []);
-
-  if(showSplashScreen) {
-    return <AppSplashScreen />
-  }
-
   return (
-    <AuthContext.Provider value={{
-      accountData,
-      setAccountData,
-      isAuthenticated,
-      setIsAuthenticated,
-    }}>
-      <SafeAreaView style={styles.container}>
-        <NavigationContainer>
-          <RootNavigator />
-        </NavigationContainer>
-      </SafeAreaView>
-    </AuthContext.Provider>
+    <ScrollView
+      contentInsetAdjustmentBehavior="automatic"
+      style={backgroundStyle}>
+      <Header />
+      <View
+        style={{
+          backgroundColor: isDarkMode ? Colors.black : Colors.white,
+        }}>
+        <Text style={styles.highlight}>Main Screen</Text>
+        <Section title="See Your Changes">
+          <ReloadInstructions />
+        </Section>
+        <Section title="Debug">
+          <DebugInstructions />
+        </Section>
+        <Section title="Learn More">
+          Read the docs to discover what to do next:
+        </Section>
+        <LearnMoreLinks />
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   sectionContainer: {
     marginTop: 32,
     paddingHorizontal: 24,
@@ -118,4 +101,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default MainScreen;
