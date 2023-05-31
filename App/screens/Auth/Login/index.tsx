@@ -16,7 +16,7 @@ import { yupResolver } from '@hookform/resolvers/yup';;
 import Button from '../../../uikit/Button';
 import Text from '../../../uikit/Text';
 import TextInput from '../../../uikit/TextInput';
-// import { navigate, pop } from '@helper/navigation';
+import { navigate, pop } from '../../../helper/navigation';
 // import {
 //   removeSessionData,
 //   setAccountCredential,
@@ -62,7 +62,7 @@ const LoginScreen: React.FC = () => {
   const isAllFieldFilled = Object.values(formValues).every((val) => val);
 
   const onPressRegister = () => {
-    // navigate('RegistrationScreen', {});
+    navigate('RegistrationScreen');
   };
 
   const doResetErrorSubmit = () => {

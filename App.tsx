@@ -5,7 +5,7 @@
  * @format
  */
 
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -24,11 +24,14 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import { NavigationContainer } from '@react-navigation/native';
+import { NavigationState } from '@react-navigation/core';
+import { navigationRef } from './App/helper/navigation';
 import AuthContext from './App/context/Auth';
 import AppSplashScreen from './App/screens/Splash';
 import RootNavigator from './App/navigation/RootNavigator';
 
 function App(): JSX.Element {
+  const routeNameRef = useRef<string>();
   const [showSplashScreen, setIsShowSplashScreen] = useState(true);
   const [accountData, setAccountData] = useState({});
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -43,6 +46,20 @@ function App(): JSX.Element {
     return <AppSplashScreen />
   }
 
+
+  // Gets the current screen from navigation state
+  // @ts-ignore
+  const getActiveRoute = (state: NavigationState) => {
+    const route = state.routes[state.index];
+
+    if (route.state) {
+      // Dive into nested navigators
+      return getActiveRoute(route.state as NavigationState);
+    }
+
+    return route;
+  };
+
   return (
     <AuthContext.Provider value={{
       accountData,
@@ -51,7 +68,17 @@ function App(): JSX.Element {
       setIsAuthenticated,
     }}>
       <SafeAreaView style={styles.container}>
-        <NavigationContainer>
+        <NavigationContainer
+          ref={navigationRef}
+          onReady={() => {
+            routeNameRef.current = navigationRef?.current?.getCurrentRoute()?.name;
+          }}
+          onStateChange={(state) => {
+            const { name: currentRouteName } = getActiveRoute(
+              state as NavigationState,
+            );
+            routeNameRef.current = currentRouteName;
+          }}>
           <RootNavigator />
         </NavigationContainer>
       </SafeAreaView>
