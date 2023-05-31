@@ -1,9 +1,3 @@
-import AppStyles from '../../theme/appStyles';
-import Fonts from '../../theme/fonts';
-import Icon from '../../uikit/Icon';
-import Spinner from '../../uikit/Spinner';
-import Text from '../../uikit/Text';
-import Colors from '../../theme/colors';
 import React from 'react';
 import {
   Pressable,
@@ -15,6 +9,13 @@ import {
   TextStyle,
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import ButtonMenuList from './ButtonMenuList';
+import AppStyles from '../../theme/appStyles';
+import Fonts from '../../theme/fonts';
+import Icon from '../../uikit/Icon';
+import Spinner from '../../uikit/Spinner';
+import Text from '../../uikit/Text';
+import Colors from '../../theme/colors';
 
 /**
  * Documentation: https://reactnative.dev/docs/pressable
@@ -81,6 +82,7 @@ interface Props {
 }
 
 interface ButtonProps {
+  MenuList: typeof ButtonMenuList;
   Mode: {
     Contained: 'contained';
     Outlined: 'outlined';
@@ -379,5 +381,7 @@ Button.Mode = {
   Custom: 'custom',
   ContainedInverted: 'contained-inverted',
 };
+
+Button.MenuList = ButtonMenuList;
 
 export default Button;
