@@ -15,7 +15,7 @@ interface Props {
   accessibilityLabel?: string;
 }
 
-const ShipperIcon = createIconSetFromIcoMoon(iconConfig);
+const ColectionIcon = createIconSetFromIcoMoon(iconConfig);
 
 const Icon: React.FC<Props> = ({
   name,
@@ -36,7 +36,7 @@ const Icon: React.FC<Props> = ({
         accessibilityLabel={accessibilityLabel || testID}
         hitSlop={AppStyles.HitSlopValue}
       >
-        <ShipperIcon
+        <ColectionIcon
           name={name}
           size={size}
           style={{ ...(style as Record<string, unknown>), color }}

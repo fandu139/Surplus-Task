@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     ...AppStyles.rowItemsCenterSpace,
     width: '100%',
     height: 60,
-    backgroundColor: Colors.BLACK,
+    backgroundColor: Colors.GREEN_47,
     paddingHorizontal: 20,
   },
   leftContent: {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   BackHandler,
   Keyboard,
@@ -16,33 +16,49 @@ import { yupResolver } from '@hookform/resolvers/yup';;
 import Button from '../../../uikit/Button';
 import Text from '../../../uikit/Text';
 import TextInput from '../../../uikit/TextInput';
-import { navigate, pop } from '../../../helper/navigation';
-// import {
-//   removeSessionData,
-//   setAccountCredential,
-//   setSessionData,
-//   setMerchantId,
-//   getMerchantId,
-// } from '@storage/auth';
+import { navigate, pop, replace } from '../../../helper/navigation';
+import {
+  getSessionData,
+  setSessionData,
+  getNewUserRegisted,
+} from '../../../storage/auth';
 import AuthContext from '../../../context/Auth';
 import Colors from '../../../theme/colors';
-import AppStyles from '../../../theme/appStyles';
 import { ICON_HIDE_PASSWORD, ICON_SHOW_PASSWORD } from '../../../assets/icon';
 import { FOOD_WASTE_MASKOT } from '../../../assets/images';
 
 const LoginScreen: React.FC = () => {
   const [showPassword, setShowPassword] = React.useState(false);
-  // const { setIsAuthenticated, setAccountData } =
-  //   React.useContext(AuthContext);
-  const [errorMessageAfterSubmit, setErrorMessageAfterSubmit] = React.useState(' ');
+  const { setIsAuthenticated, setAccountData, isAuthenticated } =
+    React.useContext(AuthContext);
+  const [errorMessageAfterSubmit, setErrorMessageAfterSubmit] = React.useState('');
   const [isLoading, setLoading] = React.useState(false);
   
+  useEffect(() => {
+    const isCheckData = async () => { 
+      if (isAuthenticated) {
+        replace('MainNavigator', { screen: 'MainScreen' });
+      } else {
+        const getDataUser = await getSessionData();
+        if (!!getDataUser?.length) {
+          setIsAuthenticated(true);
+          setAccountData(getDataUser);
+          replace('MainNavigator', { screen: 'MainScreen' });
+        }
+      }
+    }
+
+    isCheckData();
+  }, [])
+
   const schema = yup.object().shape({
     email: yup
       .string()
       .email("Format email harus sesuai")
       .required("Email harus diisi"),
-    password: yup.string().required("Kata sandi harus diisi"),
+    password: yup
+      .string()
+      .required("Perlu diisKata sandi harus diisi"),
   });
 
   const {
@@ -72,11 +88,22 @@ const LoginScreen: React.FC = () => {
   const onSubmitLogin = async ({ email, password }: { email: string; password: string }) => {
     doResetErrorSubmit();
     Keyboard.dismiss();
-  };
-
-  const onPressForgotPassword = () => {
-    Keyboard.dismiss();
-    // navigate('ForgotPasswordScreen', {});
+    const getNewAccount: Array<{
+      email: string;
+      name: string;
+      password: string;
+      passwordConfirmation: string;
+    }> = await getNewUserRegisted();
+    const isCheckData = getNewAccount.some(value => value?.email === email && value?.password === password);
+    if (isCheckData) {
+      const getData = getNewAccount.filter(value => value?.email === email && value?.password === password);
+      await setSessionData(getData);
+      setIsAuthenticated(true);
+      setAccountData(getData);
+      replace('MainNavigator', { screen: 'MainScreen' });
+    } else {
+      setErrorMessageAfterSubmit("User name dan password tidak di temukan");
+    }
   };
 
   return (
@@ -127,15 +154,6 @@ const LoginScreen: React.FC = () => {
             />
           )}
         />
-        <TouchableOpacity onPress={onPressForgotPassword}>
-          <Text
-            testID="error-message-login"
-            accessibilityLabel="error-message-login"
-            style={styles.labelForgotPassword}
-          >
-            Lupa Kata Sandi?
-          </Text>
-        </TouchableOpacity>
         <Controller
           control={control}
           name="password"
@@ -166,10 +184,8 @@ const LoginScreen: React.FC = () => {
               }}
               testID="text-input-password-login"
               testIDHelper="text-input-password-login-error"
-              testIDRightText="button-forgot-password"
               accessibilityLabel="login-password-field"
               accessibilityLabelHelper="login-password-field-textview"
-              accessibilityLabelRightText="login-button-forgot-password"
             />
           )}
         />
@@ -179,7 +195,7 @@ const LoginScreen: React.FC = () => {
           disabled={!isAllFieldFilled}
           style={styles.buttonContainer}
           title={"Masuk"}
-          onPress={handleSubmit(onSubmitLogin, doResetErrorSubmit)}
+          onPress={handleSubmit(onSubmitLogin)}
           testID="button-login"
           accessibilityLabel="login-button"
           mode='contained-inverted'

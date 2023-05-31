@@ -1,103 +1,136 @@
-import React, { useState } from 'react';
-import type {PropsWithChildren} from 'react';
+import React from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+  ICON_MENU_ACCOUNT,
+  ICON_MENU_HOME,
+} from '../../assets/icon';
+import AuthContext from '../../context/Auth';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { getFocusedRouteNameFromRoute, RouteProp } from '@react-navigation/native';
+import AccountScreen from '../../screens/Account';
+import HomeScreen from '../../screens/Home';
+import Colors from '../../theme/colors';
+import Fonts from '../../theme/fonts';
+import Icon from '../../uikit/Icon';
+import Text from '../../uikit/Text';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+type RouteParams = {
+  screen: string;
+};
 
-function Section({children, title}: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
+type RootStackParamList = {
+  MainScreen: RouteParams;
+};
+
+type Props = NativeStackScreenProps<RootStackParamList, 'MainScreen'>;
+
+const BottomTab = createBottomTabNavigator();
+
+function getHeaderTitle(route: RouteProp<RootStackParamList, 'MainScreen'>) {
+  const routeName = getFocusedRouteNameFromRoute(route) ?? 'Home';
+
+  if (routeName) return routeName;
+  return 'Home';
 }
 
-function MainScreen(): JSX.Element {
-const [showSplashScreen, setIsShowSplashScreen] = useState(true);
-const [accountData, setAccountData] = useState({});
-const [isAuthenticated, setIsAuthenticated] = useState(false);
+const MainScreen: React.FC<Props> = ({ navigation, route }: Props) => {
+  let tabScreenList = [
+    {
+      name: 'Home',
+      screenName: 'HomeScreen',
+      screen: HomeScreen,
+      icon: ICON_MENU_HOME,
+      tabBarTestID: 'home_tab',
+    },
+    {
+      name: 'Akun',
+      screenName: 'AccountScreen',
+      screen: AccountScreen,
+      icon: ICON_MENU_ACCOUNT,
+      tabBarTestID: 'account_tab',
+    },
+  ];
 
-  const isDarkMode = useColorScheme() === 'dark';
+  React.useLayoutEffect(() => {
+    navigation.setOptions({ headerTitle: getHeaderTitle(route) });
+  }, [navigation, route]);
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
   return (
-    <ScrollView
-      contentInsetAdjustmentBehavior="automatic"
-      style={backgroundStyle}>
-      <Header />
-      <View
-        style={{
-          backgroundColor: isDarkMode ? Colors.black : Colors.white,
-        }}>
-        <Text style={styles.highlight}>Main Screen</Text>
-        <Section title="See Your Changes">
-          <ReloadInstructions />
-        </Section>
-        <Section title="Debug">
-          <DebugInstructions />
-        </Section>
-        <Section title="Learn More">
-          Read the docs to discover what to do next:
-        </Section>
-        <LearnMoreLinks />
-      </View>
-    </ScrollView>
+    <BottomTab.Navigator
+      screenOptions={{
+        tabBarAllowFontScaling: false,
+        tabBarHideOnKeyboard: true,
+        tabBarActiveTintColor: Colors.GREEN_47,
+        tabBarInactiveTintColor: Colors.GRAY70,
+        tabBarStyle: {
+          height: 60,
+          borderTopWidth: 0.3,
+        },
+        tabBarLabelStyle: {
+          marginBottom: 6,
+          ...Fonts.bold,
+          fontSize: Fonts.size.moreExtraSmall,
+        },
+      }}
+    >
+      {tabScreenList.map((value) => {
+        let tabOptions: {
+          tabBarLabel: string;
+          tabBarTestID: string;
+          tabBarAccessibilityLabel: string;
+          tabBarIcon: ({ focused }: { focused: boolean }) => JSX.Element;
+          headerShown: boolean;
+        } = {
+          tabBarLabel: value.name,
+          tabBarTestID: value.tabBarTestID,
+          tabBarAccessibilityLabel: value.tabBarTestID,
+          tabBarIcon: ({ focused }: { focused: boolean }) => (
+            <Icon name={value.icon} color={focused ? Colors.GREEN_47 : Colors.GRAY70} size={22} />
+          ),
+          headerShown: false,
+        };
+
+        return (
+          <BottomTab.Screen
+            key={value.name}
+            name={value.screenName}
+            component={value.screen}
+            options={tabOptions}
+          />
+        );
+      })}
+    </BottomTab.Navigator>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  buttonContainer: {
+    width: 80,
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  content: {
+    top: 10,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    alignItems: 'center',
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  outerCircleContainer: {
+    width: 53,
+    height: 53,
   },
-  highlight: {
-    fontWeight: '700',
+  innerCircleContainer: {
+    width: 45,
+    height: 45,
+    borderRadius: 45 / 2,
+    backgroundColor: Colors.RED,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  tabBarLabel: {
+    marginTop: 7,
+    fontSize: Fonts.size.moreExtraSmall,
+    color: Colors.GRAY70,
   },
 });
 

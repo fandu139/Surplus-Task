@@ -9,20 +9,8 @@ import React, { useRef, useState } from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
-  Text,
-  useColorScheme,
-  View,
 } from 'react-native';
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { NavigationState } from '@react-navigation/core';
 import { navigationRef } from './App/helper/navigation';
@@ -33,7 +21,7 @@ import RootNavigator from './App/navigation/RootNavigator';
 function App(): JSX.Element {
   const routeNameRef = useRef<string>();
   const [showSplashScreen, setIsShowSplashScreen] = useState(true);
-  const [accountData, setAccountData] = useState({});
+  const [accountData, setAccountData] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   React.useEffect(() => {
