@@ -15,13 +15,13 @@ Tech Features:
 8. Stein JS Client
 
 ## Hooks and APIs Implementation
-- :white_check_mark useCallback
-- :white_check_mark useContext
-- :white_check_mark useEffect
-- :white_check_mark useRef
-- :white_check_mark useState
-- :white_check_mark memo
-- :white_check_mark createContext
+- [X] useCallback
+- [X] useContext
+- [X] useEffect
+- [X] useRef
+- [X] useState
+- [X] memo
+- [X] createContext
 
 ## Setup Environment
 First, setup your environment by following this guide on https://reactnative.dev/docs/environment-setup
