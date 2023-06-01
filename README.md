@@ -15,13 +15,13 @@ Tech Features:
 8. Stein JS Client
 
 ## Hooks and APIs Implementation
-[x] useCallback
-[x] useContext
-[x] useEffect
-[x] useRef
-[x] useState
-[x] memo
-[x] createContext
+- [X] useCallback
+- [X] useContext
+- [X] useEffect
+- [X] useRef
+- [X] useState
+- [X] memo
+- [X] createContext
 
 ## Setup Environment
 First, setup your environment by following this guide on https://reactnative.dev/docs/environment-setup
