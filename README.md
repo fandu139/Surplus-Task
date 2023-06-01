@@ -15,13 +15,13 @@ Tech Features:
 8. Stein JS Client
 
 ## Hooks and APIs Implementation
-<input type="checkbox" disabled checked /> useCallback<br>
-<input type="checkbox" disabled checked /> useContext<br>
-<input type="checkbox" disabled checked /> useEffect<br>
-<input type="checkbox" disabled checked /> useRef<br>
-<input type="checkbox" disabled checked /> useState<br>
-<input type="checkbox" disabled checked /> memo<br>
-<input type="checkbox" disabled checked /> createContext<br>
+[x] useCallback
+[x] useContext
+[x] useEffect
+[x] useRef
+[x] useState
+[x] memo
+[x] createContext
 
 ## Setup Environment
 First, setup your environment by following this guide on https://reactnative.dev/docs/environment-setup
