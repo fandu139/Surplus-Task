@@ -58,7 +58,7 @@ const LoginScreen: React.FC = () => {
       .required("Email harus diisi"),
     password: yup
       .string()
-      .required("Perlu diisKata sandi harus diisi"),
+      .required("Kata sandi harus diisi"),
   });
 
   const {

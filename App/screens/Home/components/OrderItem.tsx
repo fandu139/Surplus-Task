@@ -24,7 +24,7 @@ type Props = {
  * @constructor
  */
 
-const ItemList: React.FC<Props> = ({
+const ItemList = React.memo(({
   item,
   index
 }: Props) => {
@@ -61,7 +61,7 @@ const ItemList: React.FC<Props> = ({
       </View>
     </TouchableOpacity>
   );
-};
+});
 
 const styles = StyleSheet.create({
   address: {
