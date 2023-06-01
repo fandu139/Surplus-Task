@@ -96,10 +96,6 @@ function validateAddress(value: string): boolean {
   return Pattern.address.test(value);
 }
 
-function validateAddressName(value: string): boolean {
-  return Pattern.addressName.test(value);
-}
-
 const unicodeCharacter = {
   dot: '\u2B24',
   checkMark: '\u2713',
@@ -118,7 +114,6 @@ const StringUtils = {
   checkValueFormat,
   formatVersion,
   validateAddress,
-  validateAddressName,
   unicodeCharacter,
 };
 

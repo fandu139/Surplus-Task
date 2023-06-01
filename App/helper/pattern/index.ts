@@ -1,12 +1,10 @@
 /* eslint-disable no-control-regex */
 const Pattern = {
   numberOnly: /^[0-9]+$/,
-  awbInput: /^([\da-zA-Z]+([-][\da-zA-Z])*)+$/i,
   checkStrip: /([-])+$/i,
   checkStripOnly: /^[-]/i,
   notSpace: /\s/i,
   coordinate: /@(-?\d*\.?\d+),(\d*\.?\d+)/g,
-  addressName: /^[A-Za-z0-9]+[a-zA-Z0-9 .\-/\n]*$/i,
   postCodeInternational: /^[A-Za-z0-9]+[a-zA-Z0-9 -]*$/i,
   weightPackage: /^\d+([,.]\d+)?$/,
   phone: /^(08|628|\+628)([1-9])(?:\d{8,11})$/,
@@ -20,7 +18,6 @@ const Pattern = {
   spaceNotAllowed: /^\S*$/,
   decimal: /^\d*\.?\d*$/,
   alphabetOnly: /^[A-Za-z\s]+$/,
-  contactName: /^[a-zA-Z0-9 ]+$/,
 };
 
 export default Pattern;
